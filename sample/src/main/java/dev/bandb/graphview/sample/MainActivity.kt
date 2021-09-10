@@ -11,13 +11,21 @@ import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var nodesET: TextInputEditText
+    private lateinit var edgesET: TextInputEditText
+    private lateinit var iterationsET: TextInputEditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupToolbar()
         setupRecyclerView()
+        nodesET = findViewById(R.id.et_nodes)
+        edgesET = findViewById(R.id.et_edges)
+        iterationsET = findViewById(R.id.et_iterations)
     }
 
     private fun setupRecyclerView() {
@@ -47,7 +55,20 @@ class MainActivity : AppCompatActivity() {
             val graphItem = MainContent.ITEMS[position]
             holder.title.text = graphItem.title
             holder.description.text = graphItem.description
-            holder.itemView.setOnClickListener { startActivity(Intent(this@MainActivity, graphItem.clazz)) }
+            holder.itemView.setOnClickListener {
+                val intent = Intent(this@MainActivity, graphItem.clazz)
+                with(nodesET.text.toString()) {
+                    intent.putExtra(NODES_KEY, if (this == "") 50 else this.toInt())
+                }
+                with(edgesET.text.toString()) {
+                    intent.putExtra(EDGES_KEY, if (this == "") 50 else this.toInt())
+                }
+                with(iterationsET.text.toString()) {
+                    intent.putExtra(ITERATIONS_KEY, if (this == "") 1000 else this.toInt())
+                }
+
+                startActivity(intent)
+            }
         }
 
         override fun getItemCount(): Int {

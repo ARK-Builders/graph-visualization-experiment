@@ -15,8 +15,8 @@ object MainContent {
     }
 
     init {
-        ITEMS.add(GraphItem("BuchheimWalker", "Algorithm for drawing tree structures", BuchheimWalkerActivity::class.java))
+ //       ITEMS.add(GraphItem("BuchheimWalker", "Algorithm for drawing tree structures", BuchheimWalkerActivity::class.java))
         ITEMS.add(GraphItem("FruchtermanReingold", "Directed graph drawing by simulating attraction/repulsion forces", FruchtermanReingoldActivity::class.java))
-        ITEMS.add(GraphItem("Sugiyama et al.", "Algorithm for drawing multilayer graphs, taking advantage of the hierarchical structure of the graph.", SugiyamaActivity::class.java))
+ //       ITEMS.add(GraphItem("Sugiyama et al.", "Algorithm for drawing multilayer graphs, taking advantage of the hierarchical structure of the graph.", SugiyamaActivity::class.java))
     }
 }

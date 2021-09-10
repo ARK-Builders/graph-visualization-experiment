@@ -14,6 +14,8 @@ import kotlin.system.measureTimeMillis
 abstract class GraphLayoutManager internal constructor(context: Context)
     : RecyclerView.LayoutManager() {
 
+    lateinit var buildTimeListener: (time: Long) -> Unit
+
     var useMaxSize: Boolean = DEFAULT_USE_MAX_SIZE
         set(value) {
             field = value
@@ -129,6 +131,7 @@ abstract class GraphLayoutManager internal constructor(context: Context)
                 size.height + paddingBottom + paddingTop
             )
         }
+        buildTimeListener(buildMillis)
         Log.d("GRAPH", "build in $buildMillis")
     }
 

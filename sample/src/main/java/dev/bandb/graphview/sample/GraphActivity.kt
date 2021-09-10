@@ -21,7 +21,6 @@ import kotlin.system.measureTimeMillis
 abstract class GraphActivity : AppCompatActivity() {
     protected lateinit var recyclerView: RecyclerView
     protected lateinit var adapter: AbstractGraphAdapter<NodeViewHolder>
-    private lateinit var fab: FloatingActionButton
     private var currentNode: Node? = null
     private var nodeCount = 1
     private lateinit var graph: Graph
@@ -43,7 +42,6 @@ abstract class GraphActivity : AppCompatActivity() {
         setEdgeDecoration()
         setupGraphView(graph)
 
-        setupFab(graph)
         setupToolbar()
     }
 
@@ -61,28 +59,6 @@ abstract class GraphActivity : AppCompatActivity() {
         }.apply {
             this.submitGraph(graph)
             recyclerView.adapter = this
-        }
-    }
-
-    private fun setupFab(graph: Graph) {
-        fab = findViewById(R.id.addNode)
-        fab.setOnClickListener {
-            val newNode = Node(nodeText)
-            if (currentNode != null) {
-                graph.addEdge(currentNode!!, newNode)
-            } else {
-                graph.addNode(newNode)
-            }
-            adapter.notifyDataSetChanged()
-        }
-        fab.setOnLongClickListener {
-            if (currentNode != null) {
-                graph.removeNode(currentNode!!)
-                currentNode = null
-                adapter.notifyDataSetChanged()
-                fab.hide()
-            }
-            true
         }
     }
 
@@ -107,9 +83,6 @@ abstract class GraphActivity : AppCompatActivity() {
 
         init {
             itemView.setOnClickListener {
-                if (!fab.isShown) {
-                    fab.show()
-                }
                 currentNode = adapter.getNode(bindingAdapterPosition)
                 Snackbar.make(
                     itemView,
